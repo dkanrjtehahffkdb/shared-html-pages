@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>양가 첫 만남 초대장</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@200;300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #e8e4de;
+  font-family: 'Noto Serif KR', serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.card {
+  background: #faf8f4;
+  width: 100%;
+  max-width: 720px;
+  min-height: 1050px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+}
+
+/* 상단 멘트 */
+.side-title {
+  text-align: center;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #7a8a60;
+  letter-spacing: 4px;
+  line-height: 1.8;
+  padding-top: 60px;
+  padding-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 안개꽃 장식 */
+.floral-deco {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 260px;
+  height: 750px;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.floral-deco svg { width: 100%; height: 100%; }
+.stem { stroke: #a4b88a; stroke-width: 1.5; fill: none; }
+.branch { stroke: #b5c49a; stroke-width: 1; fill: none; }
+.bud-pink { fill: #e8c5c0; }
+.bud-light { fill: #f0ddd8; }
+.bud-white { fill: #f5ece8; }
+
+/* 본문 콘텐츠 */
+.content {
+  padding: 20px 100px 60px 100px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.greeting {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 2.2;
+  color: #4a4540;
+  margin-bottom: 44px;
+  letter-spacing: 0.5px;
+}
+
+.invitation-text {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 2.2;
+  color: #4a4540;
+  margin-bottom: 36px;
+}
+
+.closing {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #7a7a70;
+  margin-bottom: 52px;
+  line-height: 2;
+}
+
+.divider-line {
+  width: 1px;
+  height: 46px;
+  background: #c5bfb0;
+  margin: 0 auto 36px;
+}
+
+/* 일시·장소 정보 */
+.info-area {
+  margin-bottom: 16px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 8px;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #8a9a68;
+  letter-spacing: 2px;
+  min-width: 36px;
+  text-align: right;
+}
+
+.info-value {
+  font-size: 14.5px;
+  font-weight: 300;
+  color: #4a4540;
+}
+
+.info-sub {
+  font-size: 12px;
+  color: #999;
+  font-weight: 300;
+  margin-top: 2px;
+}
+
+.map-link {
+  display: block;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: #8a9a68;
+  text-decoration: none;
+  border-bottom: none;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+.map-link:hover {
+  color: #6a7a50;
+}
+
+.copy-link {
+  font-size: 11.5px;
+  color: #8a9a68;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(138,154,104,0.3);
+  padding-bottom: 1px;
+  margin-left: 6px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.copy-link:hover {
+  border-color: #8a9a68;
+}
+
+.copy-toast {
+  display: inline-block;
+  opacity: 0;
+  font-size: 11px;
+  color: #fff;
+  background: #7a8a60;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-left: 8px;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.copy-toast.show {
+  opacity: 1;
+}
+
+/* D코스 메뉴 */
+.menu-section {
+  margin-top: 44px;
+  padding: 28px 32px 24px;
+  border: 1px solid #e5e0d6;
+  display: inline-block;
+  text-align: center;
+  max-width: 480px;
+}
+
+.menu-header {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #7a8a60;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+.menu-header span {
+  font-size: 11px;
+  font-weight: 400;
+  color: #aaa;
+  letter-spacing: 1px;
+  display: block;
+  margin-top: 4px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px 10px;
+  text-align: left;
+}
+
+.menu-col-title {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #8a9a68;
+  letter-spacing: 2px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid #ddd8cc;
+  margin-bottom: 6px;
+}
+
+.menu-col {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: #5a5550;
+  line-height: 1.9;
+}
+
+/* Responsive */
+
+/* 스크롤 페이드인 애니메이션 */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 각 요소별 딜레이 */
+.fade-in:nth-child(1) { transition-delay: 0.1s; }
+.fade-in:nth-child(2) { transition-delay: 0.25s; }
+.fade-in:nth-child(3) { transition-delay: 0.4s; }
+.fade-in:nth-child(4) { transition-delay: 0.55s; }
+.fade-in:nth-child(5) { transition-delay: 0.7s; }
+.fade-in:nth-child(6) { transition-delay: 0.85s; }
+
+@media (max-width: 700px) {
+  .content { padding: 16px 36px 40px 36px; }
+  .side-title { font-size: 17px; padding-top: 40px; }
+  .vertical-title .big { font-size: 17px; }
+  .floral-deco { width: 180px; right: -30px; }
+  .menu-section { padding: 20px 16px 18px; }
+  .menu-grid { grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- 상단 멘트 -->
+  <div class="side-title fade-in">
+    소중한 두 가족이<br>처음 만나는 날
+  </div>
+
+  <!-- 안개꽃 장식 SVG -->
+  <div class="floral-deco">
+    <svg viewBox="0 0 280 750" xmlns="http://www.w3.org/2000/svg">
+      <path class="stem" d="M 140 750 Q 130 580 145 420 Q 155 310 140 210 Q 130 130 150 50"/>
+      <path class="stem" d="M 140 750 Q 160 610 170 470 Q 185 360 200 260 Q 210 190 195 100"/>
+      <path class="stem" d="M 140 750 Q 120 590 110 440 Q 95 330 80 230 Q 70 170 90 80"/>
+      <path class="branch" d="M 145 420 Q 180 390 210 380"/>
+      <path class="branch" d="M 140 370 Q 100 350 75 330"/>
+      <path class="branch" d="M 155 310 Q 190 280 220 275"/>
+      <path class="branch" d="M 140 260 Q 110 240 85 235"/>
+      <path class="branch" d="M 145 210 Q 175 185 200 180"/>
+      <path class="branch" d="M 150 160 Q 120 140 95 135"/>
+      <path class="branch" d="M 170 470 Q 210 450 235 445"/>
+      <path class="branch" d="M 110 440 Q 70 420 50 415"/>
+      <path class="branch" d="M 200 260 Q 230 240 250 235"/>
+      <path class="branch" d="M 80 230 Q 50 210 35 205"/>
+      <path class="branch" d="M 155 110 Q 180 90 200 85"/>
+      <path class="branch" d="M 90 80 Q 60 60 45 55"/>
+      <circle class="bud-pink" cx="212" cy="378" r="5"/><circle class="bud-light" cx="220" cy="372" r="4"/><circle class="bud-white" cx="207" cy="385" r="3.5"/>
+      <circle class="bud-light" cx="73" cy="328" r="5"/><circle class="bud-pink" cx="65" cy="335" r="4"/><circle class="bud-white" cx="78" cy="320" r="3"/>
+      <circle class="bud-pink" cx="222" cy="273" r="5.5"/><circle class="bud-white" cx="215" cy="267" r="4"/><circle class="bud-light" cx="228" cy="280" r="3.5"/>
+      <circle class="bud-light" cx="83" cy="233" r="5"/><circle class="bud-pink" cx="77" cy="228" r="3.5"/><circle class="bud-white" cx="90" cy="240" r="4"/>
+      <circle class="bud-pink" cx="202" cy="178" r="5"/><circle class="bud-light" cx="195" cy="185" r="4"/><circle class="bud-white" cx="208" cy="172" r="3"/>
+      <circle class="bud-white" cx="93" cy="133" r="5"/><circle class="bud-pink" cx="85" cy="128" r="4"/><circle class="bud-light" cx="100" cy="138" r="3.5"/>
+      <circle class="bud-pink" cx="237" cy="443" r="5"/><circle class="bud-light" cx="230" cy="438" r="4"/><circle class="bud-white" cx="240" cy="450" r="3"/>
+      <circle class="bud-light" cx="48" cy="413" r="5"/><circle class="bud-pink" cx="42" cy="408" r="3.5"/><circle class="bud-white" cx="55" cy="418" r="4"/>
+      <circle class="bud-pink" cx="252" cy="233" r="4.5"/><circle class="bud-white" cx="245" cy="228" r="3"/><circle class="bud-light" cx="257" cy="240" r="3.5"/>
+      <circle class="bud-light" cx="33" cy="203" r="4.5"/><circle class="bud-pink" cx="28" cy="198" r="3"/>
+      <circle class="bud-pink" cx="202" cy="83" r="4.5"/><circle class="bud-white" cx="196" cy="78" r="3.5"/><circle class="bud-light" cx="208" cy="90" r="3"/>
+      <circle class="bud-light" cx="43" cy="53" r="4.5"/><circle class="bud-pink" cx="38" cy="48" r="3"/><circle class="bud-white" cx="50" cy="58" r="3.5"/>
+      <circle class="bud-white" cx="160" cy="150" r="3"/><circle class="bud-pink" cx="175" cy="290" r="3.5"/><circle class="bud-light" cx="120" cy="190" r="3"/>
+      <circle class="bud-pink" cx="130" cy="360" r="3"/><circle class="bud-white" cx="185" cy="400" r="3.5"/><circle class="bud-light" cx="105" cy="290" r="3"/>
+      <circle class="bud-pink" cx="155" cy="100" r="2.5"/><circle class="bud-white" cx="125" cy="70" r="3"/>
+    </svg>
+  </div>
+
+  <!-- 본문 -->
+  <div class="content">
+    <p class="greeting fade-in">
+      저희 두 사람이 인생에 중요한 결정을 내리는 데에<br>
+      큰 힘이 되어주시고<br>
+      그 과정을 예쁘게 지켜봐주신 가족분들께<br>
+      진심으로 감사드립니다.
+    </p>
+
+    <p class="invitation-text fade-in">
+      양가 부모님들과 형제 자매들을 모시고<br>
+      의미 있는 식사자리를 마련하고자 합니다.
+    </p>
+
+    <p class="closing fade-in">
+      소중한 만남에 참석하여<br>
+      자리를 빛내주시면 감사하겠습니다.
+    </p>
+
+    <div class="divider-line fade-in"></div>
+
+    <!-- 일시·장소 -->
+    <div class="info-area fade-in">
+      <div class="info-row">
+        <span class="info-label">일시</span>
+        <span class="info-value">2026년 4월 4일 (토) 오전 11시 30분</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">장소</span>
+        <span class="info-value">만파식적 삼산점</span>
+      </div>
+      <p class="info-sub">울산 남구 남중로 91 2층 <span class="copy-link" onclick="copyAddress()">주소 복사</span></p>
+      <a class="map-link" href="https://naver.me/FsKs7Yhi" target="_blank">네이버 지도로 보기 →</a>
+      <div style="margin-top:6px;"><span class="copy-toast" id="copyToast">복사되었습니다</span></div>
+    </div>
+
+    <!-- D코스 메뉴 -->
+    <div class="menu-section fade-in">
+      <div class="menu-header">
+        D 코스
+      </div>
+      <div class="menu-grid">
+        <div>
+          <div class="menu-col-title">&nbsp;</div>
+          <div class="menu-col">
+            죽<br>
+            아삭이 물김치<br>
+            계절과일 샐러드<br>
+            토마토 해파리 냉채<br>
+            부추 잡채<br>
+            오징어 과일무침<br>
+            찹쌀화전<br>
+            두부탕수
+          </div>
+        </div>
+        <div>
+          <div class="menu-col-title">&nbsp;</div>
+          <div class="menu-col">
+            육회<br>
+            매운갈비찜<br>
+            간장소스 코다리 튀김<br>
+            된장소스 맥적구이<br>
+            메기살 찹쌀 강정<br>
+            해물 팔보채<br>
+            버섯 들깨탕
+          </div>
+        </div>
+        <div>
+          <div class="menu-col-title">&nbsp;</div>
+          <div class="menu-col">
+            계절나물<br>
+            6가지 찬<br>
+            된장찌개<br>
+            영양 돌솥밥<br>
+            <span style="color:#999; font-size:11.5px;">후식 — 차와 계절과일</span>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:10.5px; color:#bbb; margin-top:14px; font-weight:300;">※ 계절별로 메뉴 구성이 상이할 수 있습니다</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// 스크롤 페이드인 애니메이션
+document.addEventListener('DOMContentLoaded', function() {
+  var fadeEls = document.querySelectorAll('.fade-in');
+  
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  
+  fadeEls.forEach(function(el) {
+    observer.observe(el);
+  });
+});
+
+// 주소 복사
+function copyAddress() {
+  var addr = '울산 남구 남중로 91 2층';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(addr).then(function() {
+      showToast();
+    }).catch(function() {
+      fallbackCopy(addr);
+    });
+  } else {
+    fallbackCopy(addr);
+  }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showToast();
+}
+function showToast() {
+  var toast = document.getElementById('copyToast');
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 1500);
+}
+</script>
+</body>
+</html>
